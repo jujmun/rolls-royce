@@ -1,0 +1,33 @@
+## 2. Electricity Generation & Heat Rejection with a Brayton Cycle
+
+### 2.1 Why Brayton?
+
+We selected the Brayton cycle for its compatibility with high-temperature heat sources and compact, high power-density turbomachinery. An open-loop air cycle was initially considered; however, studies show open-air systems require much larger components. Our final design employs supercritical carbon dioxide (sCO₂), which requires lower compression work near the critical point and enables higher thermal efficiency.
+
+### 2.2 Overall Metrics
+
+The system achieves a thermal efficiency of **33.7 ± 1.7%**, delivering **10.1 MWe** output from 30 MW input. Uncertainty arises primarily from turbomachinery isentropic efficiencies (±4%) and recuperator NTU (±6%).
+
+### 2.3 Operating Conditions
+
+A steady-state thermodynamic model was implemented in Python. Key values: compressor inlet 8 MPa / 35 °C, discharge 35 MPa, turbine inlet 750 °C, mass flow 57.1 kg/s. The Brayton Cycle Optimizer package (see Appendix) contains Properties, Components, Cycle_solver, and Run_optimization.
+
+### 2.4 Compressor
+
+Centrifugal-based configuration; 8 MPa to 35 MPa, 57 kg/s. Multistage centrifugal (MSC) or integrally-geared centrifugal (IGC) are suitable.
+
+### 2.5 Heat Exchanger 1
+
+Passive PCHE (or sli(PCHE)); no parasitic power. TPMS (e.g. Gyroid, Schwarz-D) can improve heat transfer. Preferred option: sli(PCHE) or TPMS-enhanced PCHE.
+
+### 2.6 Turbine
+
+Single-stage radial turbine; 35 MPa → 8 MPa, 750 °C TIT, ~12.6 MW work, net ~10.1 MWe. Blade profiles: linear, Bezier, and spline (see Appendix). 3600 rpm, 3 m inlet radius.
+
+### 2.7 Heat Exchanger 2
+
+Two-stage, air-cooled, finned-tube exchanger. Cools 57 kg/s sCO₂ from 341 °C to 35 °C; bleeds ~125 °C air for MOF regeneration. Stage 1 and 2 UA: 72.8 and 134.3 kW/K; ~200 m² ground footprint. Parasitic load ~50 kW (0.3% of heat rejected).
+
+### 2.8 Recuperator
+
+Counterflow cross-corrugated diffusion-bonded PCHE; ~95% effectiveness, NTU = 5. Inspired by Rolls-Royce GT-MHR.
