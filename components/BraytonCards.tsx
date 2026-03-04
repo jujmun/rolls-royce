@@ -71,7 +71,7 @@ export function BraytonCards() {
       {CARDS.map((card) => (
         <div
           key={card.num}
-          className="bg-oxford-surface p-6 rounded-2xl border border-oxford-border shadow-card hover:shadow-card-hover transition-all duration-200 relative overflow-hidden"
+          className="bg-oxford-surface p-6 rounded-2xl border border-oxford-border shadow-card hover:shadow-card-hover hover:scale-[1.02] transition-all duration-300 relative overflow-hidden"
         >
           <div className="font-display font-black text-5xl text-oxford-accent/10 absolute top-4 right-4 leading-none select-none">
             {card.num}

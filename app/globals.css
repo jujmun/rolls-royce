@@ -20,6 +20,8 @@ body {
   background: var(--oxford-bg);
   font-weight: 400;
   line-height: 1.6;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   font-feature-settings: "kern" 1, "liga" 1;
   -webkit-font-smoothing: antialiased;
 }
@@ -115,4 +117,58 @@ body {
 @keyframes barGrow {
   from { width: 0 !important; }
   to { width: var(--bar-width, 100%) !important; }
+}
+
+/* Hero layered parallax-style background */
+.hero-bg-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-bg-layer-fixed {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 113, 227, 0.03) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(0, 113, 227, 0.02) 100%
+  );
+  background-attachment: fixed;
+}
+.hero-bg-layer-gradient {
+  /* Futuristic clean-energy inspired backdrop:
+     - Soft vertical gradient
+     - Subtle diagonal grid lines
+     - Cyan / green glows hinting at energy flows */
+  background-image:
+    radial-gradient(circle at 12% 0%, rgba(0, 113, 227, 0.18) 0%, transparent 55%),
+    radial-gradient(circle at 88% 70%, rgba(52, 199, 89, 0.18) 0%, transparent 55%),
+    linear-gradient(120deg, rgba(148, 163, 184, 0.08) 0%, transparent 40%, transparent 60%, rgba(15, 23, 42, 0.06) 100%),
+    repeating-linear-gradient(
+      135deg,
+      rgba(148, 163, 184, 0.16) 0px,
+      rgba(148, 163, 184, 0.16) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    linear-gradient(180deg, var(--oxford-bg) 0%, var(--oxford-bg2) 100%);
+  background-size: auto, auto, 140% 140%, 220% 220%, 100% 100%;
+  background-position: center, center, center, center, center;
+}
+@keyframes hero-shimmer {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.hero-shimmer {
+  animation: hero-shimmer 8s ease-in-out infinite;
+}
+
+/* Hide scrollbars for custom scroll containers (still scrollable) */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }

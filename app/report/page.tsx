@@ -40,23 +40,6 @@ export default async function ReportPage() {
         </div>
       </div>
       <div className="container mx-auto max-w-3xl px-6 py-14">
-      <nav className="mb-12 border-b border-oxford-border pb-6">
-        <p className="text-sm font-medium text-oxford-text-dim mb-3">
-          On this page
-        </p>
-        <ul className="flex flex-wrap gap-x-6 gap-y-2">
-          {SECTIONS.map((s) => (
-            <li key={s.slug}>
-              <a
-                href={`#${s.slug}`}
-                className="text-oxford-accent hover:underline"
-              >
-                {s.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
       <div className="prose-report max-w-none">
         {(await Promise.all(
           SECTIONS.map(async (section) => {

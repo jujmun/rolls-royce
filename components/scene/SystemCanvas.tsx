@@ -91,20 +91,22 @@ export function SystemCanvas() {
         </Canvas>
       </Suspense>
       {selectedNode && (
-        <div className="absolute bottom-4 left-4 right-4 max-w-sm rounded-xl bg-oxford-surface/98 backdrop-blur-xl border border-oxford-border shadow-card-hover p-5 sm:right-auto">
-          <p className="text-lg font-semibold text-oxford-text font-sans">{selectedNode.label}</p>
-          <p className="mt-2 text-sm leading-relaxed text-oxford-text-dim font-sans">{selectedNode.description}</p>
-          <p className="mt-3 text-xs font-medium text-oxford-text-dim font-mono">
+        <div className="absolute bottom-4 left-4 right-4 max-w-md rounded-2xl bg-oxford-surface/98 backdrop-blur-xl border border-oxford-border shadow-card-hover p-6 sm:right-auto">
+          <p className="text-xl font-semibold text-white font-sans">{selectedNode.label}</p>
+          <p className="mt-3 text-base leading-relaxed text-white/90 font-sans">
+            {selectedNode.description}
+          </p>
+          <p className="mt-4 text-sm font-medium text-white font-mono">
             <span className="text-oxford-accent">Role</span> — {selectedNode.role}
           </p>
           {selectedNode.metrics && selectedNode.metrics.length > 0 && (
-            <p className="mt-1 text-xs text-oxford-text-dim font-mono">
-              <span className="font-medium text-oxford-text">Key values</span> — {selectedNode.metrics.join(", ")}
+            <p className="mt-2 text-sm text-white/90 font-mono">
+              <span className="font-medium text-white">Key values</span> — {selectedNode.metrics.join(", ")}
             </p>
           )}
           <Link
             href={selectedNode.reportHref}
-            className="mt-4 inline-block text-sm font-medium text-oxford-accent hover:underline font-sans"
+            className="mt-4 inline-block text-sm font-semibold text-oxford-accent hover:underline font-sans"
           >
             {selectedNode.reportSection} →
           </Link>

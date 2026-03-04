@@ -20,15 +20,18 @@ import {
    Flow: Compressor → Recup → HX1 ← HTTR; HX1 → Turbine → Recup → HX2.1 → HX2.2 → Compressor
    Air: MOF A/B → HX2 (air side) */
 const NODE_POSITIONS: Record<NodeId, [number, number, number]> = {
-  compressor: [-2.2, -1.4, 0],
-  hx2stage2: [-0.6, -1.4, 0],
-  hx2stage1: [-0.6, -0.5, 0],
-  recuperator: [-1.4, 0.35, 0],
-  hx1: [0.2, 1.0, 0],
-  httr: [0.2, 1.9, 0],
-  turbine: [1.5, 0.6, 0],
-  mofbedA: [-0.6, -0.95, 0.85],
-  mofbedB: [-0.6, -0.95, -0.85],
+  // Brayton cycle arranged in a square loop
+  compressor: [-1.2, -1.2, 0],
+  recuperator: [-1.2, 1.2, 0],
+  hx1: [1.2, 1.2, 0],
+  turbine: [1.2, 0, 0],
+  hx2stage1: [1.2, -1.2, 0],
+  hx2stage2: [0, -1.2, 0],
+  // HTTR sits above HX1 as external heat source
+  httr: [1.2, 2.0, 0],
+  // MOF beds sit in front/behind near HX2 Stage 1 for the air path
+  mofbedA: [1.2, -0.2, 0.9],
+  mofbedB: [1.2, -0.2, -0.9],
 };
 
 const SCHEMATIC_COLORS: Record<string, string> = {
@@ -234,7 +237,7 @@ function NodeMesh({
   const isHX2 = id === "hx2stage1" || id === "hx2stage2";
   const isMOF = id === "mofbedA" || id === "mofbedB";
 
-  const labelOffset = isReactor ? 0.5 : isTurbine || isCompressor ? 0.32 : isMOF ? 0.38 : 0.28;
+  const labelOffset = isReactor ? 0.7 : isTurbine || isCompressor ? 0.45 : isMOF ? 0.5 : 0.4;
 
   return (
     <group
@@ -265,12 +268,12 @@ function NodeMesh({
       {isMOF && <MOFBedShape color={color} selected={selected} />}
       <Text
         position={[0, labelOffset, 0]}
-        fontSize={0.1}
+        fontSize={0.16}
         anchorX="center"
         anchorY="middle"
-        color="#e5dcc8"
-        outlineWidth={0.015}
-        outlineColor="#0c1222"
+        color="#ffffff"
+        outlineWidth={0.02}
+        outlineColor="#020617"
       >
         {label}
       </Text>

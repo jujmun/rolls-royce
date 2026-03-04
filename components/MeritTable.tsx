@@ -36,7 +36,7 @@ export function MeritTable() {
               <td className="py-3.5 px-5 border-b border-oxford-border text-oxford-text align-top text-sm">
                 {row.system}
               </td>
-              <td className="py-3.5 px-5 border-b border-oxford-border font-mono font-semibold text-oxford-accent whitespace-nowrap align-top text-sm">
+              <td className="py-3.5 px-5 border-b border-oxford-border font-mono font-semibold text-oxford-accent align-top text-sm">
                 {row.value}
               </td>
             </tr>

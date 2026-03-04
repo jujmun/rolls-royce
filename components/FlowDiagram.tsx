@@ -29,7 +29,7 @@ function FlowArrow({ label }: { label: string }) {
   return (
     <div className="flex-1 min-w-10 h-px bg-gradient-to-r from-oxford-accent to-transparent relative -mx-px">
       <span
-        className="absolute -top-[18px] left-1/2 -translate-x-1/2 font-mono text-[0.55rem] tracking-wider text-oxford-text-dim whitespace-nowrap"
+        className="absolute -top-[18px] left-1/2 -translate-x-1/2 font-mono text-[0.55rem] tracking-wider text-oxford-text-dim px-1"
         style={{ top: "-18px" }}
       >
         {label}
@@ -43,7 +43,7 @@ function FlowArrow({ label }: { label: string }) {
 
 export function FlowDiagram() {
   return (
-    <div className="border border-oxford-border bg-oxford-bg2 rounded-2xl p-8 overflow-x-auto mt-8 shadow-card">
+    <div className="border border-oxford-border bg-oxford-bg2 rounded-2xl p-8 overflow-x-auto no-scrollbar mt-8 shadow-card">
       <div className="flex items-center gap-0 min-w-[700px] py-8 px-4">
         {NODES.flatMap((node, i) => [
           <div key={`node-${i}`} className="flex-shrink-0 text-center">
