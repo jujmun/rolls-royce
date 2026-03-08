@@ -2,8 +2,8 @@ import { Hero } from "@/components/Hero";
 import { StatsRow } from "@/components/StatsRow";
 import { HighlightBand } from "@/components/HighlightBand";
 import { SectionTag } from "@/components/SectionTag";
+import Image from "next/image";
 import { BraytonCards } from "@/components/BraytonCards";
-import { SystemDiagram } from "@/components/SystemDiagram";
 import { MofGrid } from "@/components/MofGrid";
 import { BarChart } from "@/components/BarChart";
 import { MeritTable } from "@/components/MeritTable";
@@ -46,8 +46,14 @@ export default function HomePage() {
         <ScrollReveal delay={150}>
           <div className="w-full px-4 sm:px-8 max-w-[1400px] mx-auto">
             <div className="canvas-frame overflow-hidden rounded-2xl shadow-card-hover">
-              <div className="relative w-full aspect-video min-h-[400px] sm:min-h-[500px]">
-                <SystemDiagram />
+              <div className="relative w-full aspect-video min-h-[400px] sm:min-h-[500px] bg-oxford-bg2">
+                <Image
+                  src="/system-schematic.png"
+                  alt="sCO₂ Brayton cycle with MOF carbon capture — reactor, HX1, compressor, recuperator, turbine, cooler HX2, and MOF units"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 1400px) 100vw, 1400px"
+                />
               </div>
             </div>
           </div>
