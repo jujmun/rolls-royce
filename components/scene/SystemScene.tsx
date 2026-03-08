@@ -20,36 +20,38 @@ import {
    Flow: Compressor → Recup → HX1 ← HTTR; HX1 → Turbine → Recup → HX2.1 → HX2.2 → Compressor
    Air: MOF A/B → HX2 (air side) */
 const NODE_POSITIONS: Record<NodeId, [number, number, number]> = {
-  // Brayton cycle arranged in a square loop
-  compressor: [-1.2, -1.2, 0],
-  recuperator: [-1.2, 1.2, 0],
-  hx1: [1.2, 1.2, 0],
-  turbine: [1.2, 0, 0],
-  hx2stage1: [1.2, -1.2, 0],
-  hx2stage2: [0, -1.2, 0],
-  // HTTR sits above HX1 as external heat source
-  httr: [1.2, 2.0, 0],
-  // MOF beds sit in front/behind near HX2 Stage 1 for the air path
-  mofbedA: [1.2, -0.2, 0.9],
-  mofbedB: [1.2, -0.2, -0.9],
+  // Layout to match the standalone sCO₂ 3D demo:
+  // reactor / HX1 on the left, recuperator centered, compressor/turbine stacked,
+  // HX2 + MOF beds on the right.
+  httr: [-4.8, 0.25, 0], // Nuclear reactor at far left
+  hx1: [-3.2, 0, 0], // Heater HX1
+  recuperator: [0, 0, 0], // Recuperator block in the middle
+  compressor: [0, 1.6, 0], // Compressor above recuperator
+  turbine: [0, -1.6, 0], // Turbine below recuperator
+  // HX2 stages grouped tightly as a single assembly (slight depth offset)
+  hx2stage1: [3.0, 0, 0.22], // HX2A (front, regeneration bleed)
+  hx2stage2: [3.0, 0, -0.22], // HX2B (rear, final cooler)
+  mofbedA: [4.6, 0.9, 0], // MOF Bed 1 to the right of HX2
+  mofbedB: [4.6, -0.4, 0], // MOF Bed 2 just below
 };
 
 const SCHEMATIC_COLORS: Record<string, string> = {
-  httr: "#b91c1c",
-  hx1: "#c2410c",
-  compressor: "#1e40af",
-  turbine: "#6d28d9",
-  recuperator: "#0e7490",
-  hx2stage1: "#15803d",
-  hx2stage2: "#15803d",
-  mofbedA: "#a16207",
-  mofbedB: "#a16207",
+  httr: "#ff5500", // reactor glow
+  hx1: "#223355",
+  compressor: "#1a4499",
+  turbine: "#0f2faa",
+  recuperator: "#774400",
+  hx2stage1: "#1e4888",
+  hx2stage2: "#0d2640",
+  mofbedA: "#aa1818",
+  mofbedB: "#aa1818",
 };
 
+// Match the HTML demo flow colors: cold blue, hot orange/red, green air
 const PATH_COLORS: Record<FlowPathId, string> = {
-  sco2: "#c9b896",
-  heat: "#f97316",
-  air: "#14b8a6",
+  sco2: "#2288ff", // default cold/neutral sCO₂
+  heat: "#ff7733",
+  air: "#00ee77",
 };
 
 interface SystemSceneProps {
@@ -157,7 +159,7 @@ function CompressorShape({ color, selected }: { color: string; selected: boolean
 function RecuperatorShape({ color, selected }: { color: string; selected: boolean }) {
   return (
     <mesh castShadow receiveShadow>
-      <boxGeometry args={[0.35, 0.5, 0.22]} />
+      <boxGeometry args={[0.9, 0.6, 0.26]} />
       <meshStandardMaterial
         color={color}
         emissive={selected ? color : "#000"}
@@ -374,16 +376,27 @@ export function SystemScene({
 
   return (
     <>
+      {/* Futuristic dark energy background & atmospheric fog */}
+      <color attach="background" args={["#07101c"]} />
+      <fog attach="fog" args={["#07101c", 20, 70]} />
+
       <ambientLight intensity={0.55} />
-      <directionalLight position={[4, 5, 4]} intensity={1} castShadow />
-      <directionalLight position={[-2, 2, -2]} intensity={0.35} />
+      <directionalLight position={[8, 12, 10]} intensity={1.1} castShadow />
+      <directionalLight position={[-6, 6, -4]} intensity={0.4} />
+      {/* Colored accent lights similar to the standalone 3D demo */}
+      <pointLight position={[-6, 4, 0]} intensity={1.4} distance={18} color="#3366ff" />
+      <pointLight position={[3, 3, 2]} intensity={1.2} distance={18} color="#ff3300" />
+      <pointLight position={[9, 2, 3]} intensity={1.1} distance={18} color="#00ddaa" />
+      <pointLight position={[-10, 3, -2]} intensity={1.0} distance={18} color="#ff88cc" />
+      {/* Subtle floor grid */}
+      <gridHelper args={[14, 28, "#131e2c", "#131e2c"]} position={[0, -2.2, 0]} />
       <OrbitControls
         enablePan
         enableZoom
         enableRotate
-        minDistance={3}
-        maxDistance={14}
-        target={[-0.3, 0, 0]}
+        minDistance={9}
+        maxDistance={55}
+        target={[0, 0, 0]}
       />
       {SYSTEM_NODES.map((node) => (
         <NodeMesh
@@ -399,7 +412,24 @@ export function SystemScene({
       {SYSTEM_EDGES.map((edge) => {
         const key = edgeKey(edge.from, edge.to);
         const pathId = getPathForEdge(edge.from, edge.to);
-        const pathColor = showFlowMode && pathId ? PATH_COLORS[pathId] : null;
+        // Default color from flow path
+        let pathColor = showFlowMode && pathId ? PATH_COLORS[pathId] : null;
+        // Override around the recuperator so hot vs cold sCO₂ are visually obvious:
+        //   - Cold (blue): compressor → recuperator, recuperator → HX1
+        //   - Hot (red/orange): turbine → recuperator, recuperator → HX2 stage 1
+        if (showFlowMode) {
+          const isRecupColdEdge =
+            (edge.from === "compressor" && edge.to === "recuperator") ||
+            (edge.from === "recuperator" && edge.to === "hx1");
+          const isRecupHotEdge =
+            (edge.from === "turbine" && edge.to === "recuperator") ||
+            (edge.from === "recuperator" && edge.to === "hx2stage1");
+          if (isRecupColdEdge) {
+            pathColor = "#2288ff"; // cold sCO₂
+          } else if (isRecupHotEdge) {
+            pathColor = "#ff4422"; // hot sCO₂
+          }
+        }
         const highlighted = highlightedEdgeKeys.has(key);
         const showParticle =
           (showFlowMode && (pathId === "heat" || pathId === "air")) ||

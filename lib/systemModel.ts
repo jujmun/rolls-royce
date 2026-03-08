@@ -122,10 +122,13 @@ export const SYSTEM_NODES: SystemNode[] = [
 export const SYSTEM_EDGES: SystemEdge[] = [
   { from: "httr", to: "hx1" },
   { from: "hx1", to: "turbine" },
+  // Additional visual loop connections in the Brayton layout
+  { from: "hx1", to: "compressor" },
   { from: "compressor", to: "recuperator" },
   { from: "recuperator", to: "hx1" },
   { from: "turbine", to: "recuperator" },
   { from: "recuperator", to: "hx2stage1" },
+  { from: "hx2stage1", to: "turbine" },
   { from: "hx2stage1", to: "hx2stage2" },
   { from: "hx2stage2", to: "compressor" },
   { from: "mofbedA", to: "hx2stage1" },

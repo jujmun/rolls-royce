@@ -78,7 +78,7 @@ export function SystemCanvas() {
       </div>
       <Suspense fallback={<SceneFallback />}>
         <Canvas
-          camera={{ position: [4, 1, 4], fov: 50 }}
+          camera={{ position: [0, 3, 16], fov: 48 }}
           gl={{ antialias: true, alpha: false }}
           className="h-full w-full"
         >

@@ -3,7 +3,7 @@ import { StatsRow } from "@/components/StatsRow";
 import { HighlightBand } from "@/components/HighlightBand";
 import { SectionTag } from "@/components/SectionTag";
 import { BraytonCards } from "@/components/BraytonCards";
-import { SystemCanvas } from "@/components/scene/SystemCanvas";
+import { SystemDiagram } from "@/components/SystemDiagram";
 import { MofGrid } from "@/components/MofGrid";
 import { BarChart } from "@/components/BarChart";
 import { MeritTable } from "@/components/MeritTable";
@@ -34,12 +34,12 @@ export default function HomePage() {
       <section id="system" className="relative z-10 w-full bg-oxford-bg2 py-20 sm:py-28 scroll-mt-24">
         <div className="max-w-[1100px] mx-auto px-8 mb-10">
           <ScrollReveal>
-            <SectionTag>Interactive experience</SectionTag>
+            <SectionTag>System schematic</SectionTag>
             <h2 className="font-display font-bold text-[clamp(1.75rem,4vw,2.75rem)] text-oxford-text-bright leading-tight tracking-tight mb-4">
               Explore the system
             </h2>
             <p className="text-oxford-text-dim max-w-xl">
-              Drag to rotate · Turn on &quot;Show how systems connect&quot; to see sCO₂, heat, and air paths · Click any component for details.
+              Follow the colored paths to see helium heat input, sCO₂ Brayton states (1–4), and how waste heat drives MOF-based CO₂ capture.
             </p>
           </ScrollReveal>
         </div>
@@ -47,7 +47,7 @@ export default function HomePage() {
           <div className="w-full px-4 sm:px-8 max-w-[1400px] mx-auto">
             <div className="canvas-frame overflow-hidden rounded-2xl shadow-card-hover">
               <div className="relative w-full aspect-video min-h-[400px] sm:min-h-[500px]">
-                <SystemCanvas />
+                <SystemDiagram />
               </div>
             </div>
           </div>
