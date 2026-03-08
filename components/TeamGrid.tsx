@@ -1,6 +1,14 @@
 import Link from "next/link";
 
-const MEMBERS = [
+type Member = {
+  initials: string;
+  name: string;
+  role: string;
+  link?: string;
+  gradient?: string;
+};
+
+const MEMBERS: Member[] = [
   {
     initials: "SC",
     name: "Shing Hei (Rickie) Chan",
