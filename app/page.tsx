@@ -5,7 +5,6 @@ import { SectionTag } from "@/components/SectionTag";
 import Image from "next/image";
 import { BraytonCards } from "@/components/BraytonCards";
 import { MofGrid } from "@/components/MofGrid";
-import { BarChart } from "@/components/BarChart";
 import { MeritTable } from "@/components/MeritTable";
 import { TeamGrid } from "@/components/TeamGrid";
 import { Footer } from "@/components/Footer";
@@ -83,8 +82,6 @@ export default function HomePage() {
             CO₂ Capture via<br />MOF Beds
           </h2>
           <MofGrid />
-          <SectionTag>Annual CO₂ Capture Calculation</SectionTag>
-          <BarChart />
         </section>
       </ScrollReveal>
 
