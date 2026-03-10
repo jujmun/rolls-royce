@@ -18,6 +18,16 @@ export function Nav() {
           </Link>
         </li>
         <li>
+          <a
+            href="https://docs.google.com/document/d/15uzFkJJyFezy7XwfimMGVduEP7-cyFyqqoGPnDbct_s/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs tracking-wide uppercase text-oxford-text-dim no-underline transition-colors hover:text-oxford-accent"
+          >
+            Lessons Learned
+          </a>
+        </li>
+        <li>
           <a href="/report.pdf" download className="font-mono text-xs tracking-wide uppercase text-oxford-accent no-underline transition-colors hover:text-oxford-accent-hover">
             Download PDF
           </a>
