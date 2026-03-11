@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const NAV_LINKS = [
   { href: "/report", label: "Report", external: false },
+  { href: "/foms", label: "FoMs", external: false },
   { href: "/appendix", label: "Appendix", external: false },
   {
     href: "https://docs.google.com/document/d/15uzFkJJyFezy7XwfimMGVduEP7-cyFyqqoGPnDbct_s/edit?usp=sharing",
